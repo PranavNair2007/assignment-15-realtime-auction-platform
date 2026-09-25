@@ -1,0 +1,439 @@
+:root {
+  --bg: #0c0d10;
+  --bg-panel: #141519;
+  --bg-raised: #1b1d23;
+  --border: #26282f;
+  --text: #eceae4;
+  --text-dim: #83858f;
+  --gold: #d4af5a;
+  --gold-dim: #6b5a30;
+  --green: #4fae6c;
+  --red: #d9585f;
+  --mono: "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, monospace;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+}
+
+button { font-family: inherit; cursor: pointer; }
+
+/* ---------- Login ---------- */
+
+#login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 80% 10%, rgba(212,175,90,0.08), transparent 45%),
+    var(--bg);
+}
+
+.login-card {
+  width: 360px;
+  padding: 36px 32px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.login-card h1 {
+  font-size: 1.35rem;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+
+.login-card .tag {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: var(--gold);
+  margin: 0 0 24px;
+}
+
+.login-card label {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+
+.login-card input, .login-card select {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 0.95rem;
+  margin-bottom: 18px;
+}
+
+.login-card input:focus, .login-card select:focus {
+  outline: none;
+  border-color: var(--gold-dim);
+}
+
+.login-card button {
+  width: 100%;
+  padding: 11px;
+  background: var(--gold);
+  border: none;
+  border-radius: 6px;
+  color: #16130a;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.login-card button:hover { background: #e3c47c; }
+
+#login-error {
+  color: var(--red);
+  font-size: 0.82rem;
+  margin-top: -10px;
+  margin-bottom: 14px;
+  min-height: 1em;
+}
+
+/* ---------- App shell ---------- */
+
+#app {
+  display: none;
+  min-height: 100vh;
+  grid-template-columns: 1fr 320px;
+}
+
+#app.active { display: grid; }
+
+#floor-main {
+  padding: 26px 32px;
+  border-right: 1px solid var(--border);
+}
+
+.floor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 22px;
+}
+
+.floor-header h1 {
+  margin: 0 0 6px;
+  font-size: 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+.floor-header .desc {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  max-width: 46ch;
+}
+
+.viewers-badge {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.viewers-badge .dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  margin-right: 6px;
+}
+
+/* Status strip: price + timer */
+
+.status-strip {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.status-block {
+  flex: 1;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 22px;
+}
+
+.status-block .label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+
+.status-block .value {
+  font-size: 2rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+#current-bid-value { color: var(--gold); }
+#timer-value { transition: color 0.2s; }
+#timer-value.urgent { color: var(--red); }
+
+#highest-bidder-line {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-top: 6px;
+}
+
+#highest-bidder-line span { color: var(--text); }
+
+/* Bidding controls */
+
+#bid-panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 22px;
+  margin-bottom: 22px;
+}
+
+#bid-panel .label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+
+.bid-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.bid-controls input {
+  flex: 1;
+  padding: 12px 14px;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.bid-controls input:focus { outline: none; border-color: var(--gold-dim); }
+
+.bid-controls button {
+  padding: 0 24px;
+  background: var(--gold);
+  border: none;
+  border-radius: 6px;
+  color: #16130a;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.bid-controls button:hover { background: #e3c47c; }
+.bid-controls button:disabled {
+  background: var(--bg-raised);
+  color: var(--text-dim);
+  cursor: not-allowed;
+}
+
+.quick-bids {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.quick-bid-btn {
+  padding: 6px 12px;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  font-family: var(--mono);
+}
+
+.quick-bid-btn:hover { color: var(--gold); border-color: var(--gold-dim); }
+
+#bid-feedback {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  min-height: 1.2em;
+}
+
+#bid-feedback.error { color: var(--red); }
+#bid-feedback.success { color: var(--green); }
+
+/* Bid history */
+
+#history-panel .label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+
+#bid-history {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.history-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 9px 14px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.history-row:first-child {
+  border-color: var(--gold-dim);
+}
+
+.history-row .amount {
+  font-family: var(--mono);
+  color: var(--gold);
+}
+
+.history-row .time {
+  font-family: var(--mono);
+  color: var(--text-dim);
+  font-size: 0.76rem;
+}
+
+/* ---------- Sidebar ---------- */
+
+#sidebar {
+  padding: 26px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.sidebar-title {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+
+.auction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.auction-item {
+  padding: 12px 14px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  font-size: 0.86rem;
+}
+
+.auction-item.active {
+  border-color: var(--gold-dim);
+}
+
+.auction-item .name {
+  margin-bottom: 4px;
+}
+
+.auction-item .price {
+  font-family: var(--mono);
+  color: var(--gold);
+  font-size: 0.8rem;
+}
+
+.auction-item:hover { cursor: pointer; background: var(--bg-raised); }
+
+/* Alerts / toasts */
+
+#toast-stack {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 50;
+  width: 300px;
+}
+
+.toast {
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-size: 0.86rem;
+  line-height: 1.4;
+  animation: toast-in 0.25s ease-out;
+  border: 1px solid;
+}
+
+.toast.outbid {
+  background: rgba(217,88,95,0.12);
+  border-color: var(--red);
+  color: #f4c3c5;
+}
+
+.toast.extended {
+  background: rgba(212,175,90,0.12);
+  border-color: var(--gold);
+  color: #f0dcae;
+}
+
+.toast.sold {
+  background: rgba(79,174,108,0.12);
+  border-color: var(--green);
+  color: #bfe8cc;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#sold-banner {
+  display: none;
+  background: var(--bg-panel);
+  border: 1px solid var(--green);
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin-bottom: 22px;
+}
+
+#sold-banner.active { display: block; }
+
+#sold-banner .title { color: var(--green); font-weight: 700; margin-bottom: 4px; }
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+@media (max-width: 860px) {
+  #app { grid-template-columns: 1fr; }
+  #sidebar { border-top: 1px solid var(--border); }
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Live Auction Floor</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="toast-stack"></div>
+
+  <!-- Login screen -->
+  <div id="login-screen">
+    <div class="login-card">
+      <h1>Live Auction Floor</h1>
+      <p class="tag">socket.io · real-time bidding · anti-snipe</p>
+
+      <label for="username-input">Your name</label>
+      <input id="username-input" type="text" placeholder="e.g. Vikram" maxlength="20" autocomplete="off" />
+
+      <label for="auction-select">Auction room</label>
+      <select id="auction-select">
+        <option value="AUC_VINTAGE_99">1967 Vintage Fender Stratocaster</option>
+        <option value="AUC_POCKETWATCH_12">Antique Brass Pocket Watch</option>
+        <option value="AUC_PAINTING_07">Untitled Oil Landscape, 1958</option>
+      </select>
+
+      <div id="login-error"></div>
+      <button id="login-btn">Enter auction floor</button>
+    </div>
+  </div>
+
+  <!-- Main app -->
+  <div id="app">
+    <div id="floor-main">
+      <div class="floor-header">
+        <div>
+          <h1 id="item-title">—</h1>
+          <div class="desc" id="item-desc"></div>
+        </div>
+        <div class="viewers-badge"><span class="dot"></span><span id="viewer-count">0</span> watching</div>
+      </div>
+
+      <div id="sold-banner">
+        <div class="title" id="sold-title"></div>
+        <div id="sold-sub"></div>
+      </div>
+
+      <div class="status-strip">
+        <div class="status-block">
+          <div class="label">Current bid</div>
+          <div class="value" id="current-bid-value">₹0</div>
+          <div id="highest-bidder-line">No bids yet</div>
+        </div>
+        <div class="status-block">
+          <div class="label">Time remaining</div>
+          <div class="value" id="timer-value">--</div>
+        </div>
+      </div>
+
+      <div id="bid-panel">
+        <div class="label">Place a bid</div>
+        <div class="bid-controls">
+          <input id="bid-input" type="number" placeholder="Enter amount" />
+          <button id="bid-btn">Place bid</button>
+        </div>
+        <div class="quick-bids" id="quick-bids"></div>
+        <div id="bid-feedback"></div>
+      </div>
+
+      <div id="history-panel">
+        <div class="label">Bid activity</div>
+        <div id="bid-history"></div>
+      </div>
+    </div>
+
+    <div id="sidebar">
+      <div>
+        <div class="sidebar-title">Other auctions</div>
+        <div class="auction-list" id="auction-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
